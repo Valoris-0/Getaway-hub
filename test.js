@@ -318,7 +318,7 @@ function loadAccommodations() {
             name: 'Eco Resort Costa Rica', 
             location: 'Guanacaste, Costa Rica', 
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2070',
+            image: 'https://images.unsplash.com/photo-1586375300773-8384e3e4916f?q=80&w=2070',
             description: 'Luxury eco-resort nestled in the heart of Costa Rica\'s pristine rainforest.'
         },
         { 
@@ -346,13 +346,15 @@ function loadAccommodations() {
             name: 'Sustainable Mountain Lodge',
             location: 'Swiss Alps',
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562'
+            image: 'https://images.unsplash.com/photo-1626268220143-33e731d4aa1c?q=80&w=2070',
+            description: 'Alpine eco-lodge with panoramic mountain views and sustainable practices'
         },
         {
             name: 'Solar Powered Resort',
             location: 'Maldives',
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000'
+            image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2070',
+            description: 'Overwater villas powered by solar energy with coral reef conservation programs'
         },
         {
             name: 'Treehouse Eco Resort',
@@ -384,13 +386,6 @@ function loadAccommodations() {
             rating: 5,
             image: 'https://images.unsplash.com/photo-1542401886-65d6c61db217?q=100&w=1920&auto=format&fit=crop',
             description: 'Solar-powered desert oasis with sustainable water management'
-        },
-        {
-            name: 'Arctic Ice Hotel',
-            location: 'Rovaniemi, Finland',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1626268220143-33e731d4aa1c?q=80&w=2070',
-            description: 'Seasonal eco-lodge built with renewable materials and powered by renewable energy.'
         },
         {
             name: 'Forest Canopy Resort',
@@ -775,4 +770,36 @@ function setupMapFilters() {
 function initializeMap() {
     // This can be empty if you're not using an actual map
     console.log('Map initialized');
+}
+
+function initializeDestinationPage() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const destinations = document.querySelectorAll('.destination-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+            
+            destinations.forEach(dest => {
+                const categories = dest.getAttribute('data-category').split(' ');
+                if (filter === 'all' || categories.includes(filter)) {
+                    dest.style.display = '';
+                    dest.style.animation = 'fadeIn 0.5s ease forwards';
+                } else {
+                    dest.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+// Add this at the bottom of your existing CSS
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
