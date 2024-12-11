@@ -186,7 +186,7 @@ const distances = {
     'france-southkorea': 10000,
     'portugal-brazil': 10000,
     'usa-japan': 10600,
-    'southkorea-italy': 8500
+    'southkorea-italy': 8500,
     'usa-australia': 12800,
     'china-norway': 9500,
     'france-argentina': 11300,

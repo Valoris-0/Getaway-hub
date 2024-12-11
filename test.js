@@ -3,12 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Initialize the map
     initializeMap();
     
-    // Setup carbon calculator
-    const calculator = document.getElementById('carbon-calculator');
-    if (calculator) {
-        calculator.addEventListener('submit', handleCalculatorSubmit);
-    }
-
     // Load accommodations
     loadAccommodations();
 
@@ -28,71 +22,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load placeholder images
     loadPlaceholderImages();
 
-    // Setup booking form handler
-    const bookingForm = document.getElementById('booking-form');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', handleBookingSubmit);
-    }
-    
     // Load confirmation if on confirmation page
     if (window.location.pathname.includes('confirmation.html')) {
         loadBookingConfirmation();
     }
 
     setupMapFilters();
+
+    // Replace the form submit handler with a button click handler
+    const calculateBtn = document.getElementById('calculate-btn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', calculateCarbon);
+    }
 });
 
-function initializeMap() {
-    // Placeholder for map initialization
-    const map = document.getElementById('interactive-map');
-    // Add map implementation here
-}
-
-// Add this function after initializeMap()
-function setupMapFilters() {
-    const mapImages = document.querySelector('.map-images');
-    const filterButtons = document.querySelectorAll('.map-filters button');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            // Get images array from data attribute
-            const images = JSON.parse(button.dataset.images);
-            
-            // Clear current images
-            mapImages.innerHTML = '';
-            
-            // Create and add new images
-            images.forEach(imgSrc => {
-                const img = document.createElement('img');
-                img.src = imgSrc;
-                img.alt = `${button.textContent} destination`;
-                img.loading = "lazy";
-                mapImages.appendChild(img);
-                
-                // Force reflow and add visible class
-                setTimeout(() => {
-                    img.classList.add('visible');
-                }, 10);
-            });
-        });
-    });
-
-    // Trigger click on first button to show initial images
-    filterButtons[0].click();
-}
-
-function handleCalculatorSubmit(e) {
-    e.preventDefault();
-    calculateCarbon();
-}
-
+// Modify calculateCarbon to prevent form submission
 async function calculateCarbon() {
-    const origin = document.querySelector('#carbon-calculator input[placeholder="Origin"]').value.toLowerCase().trim();
-    const destination = document.querySelector('#carbon-calculator input[placeholder="Destination"]').value.toLowerCase().trim();
+    const origin = document.getElementById('origin').value.toLowerCase().trim();
+    const destination = document.getElementById('destination').value.toLowerCase().trim();
     const transportMode = document.getElementById('transport-mode').value;
     
     const emissionFactors = {
@@ -314,6 +261,7 @@ function calculateRoughDistance(origin, destination) {
     return Math.floor(Math.random() * 1800 + 200);
 }
 
+// Update loadAccommodations with more eco-friendly stays
 function loadAccommodations() {
     const grid = document.querySelector('.accommodation-grid');
     const accommodations = [
@@ -340,6 +288,42 @@ function loadAccommodations() {
             location: 'Tamarindo, Costa Rica', 
             rating: 4,
             image: 'https://images.unsplash.com/photo-1659511167968-01108951f78b'
+        },
+        { 
+            name: 'Sustainable Mountain Lodge',
+            location: 'Swiss Alps',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562'
+        },
+        {
+            name: 'Solar Powered Resort',
+            location: 'Maldives',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000'
+        },
+        {
+            name: 'Treehouse Eco Resort',
+            location: 'Amazon, Brazil',
+            rating: 4,
+            image: 'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7'
+        },
+        {
+            name: 'Zero-Waste Hotel',
+            location: 'Copenhagen, Denmark',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1601918774946-25832a4be0d6'
+        },
+        {
+            name: 'Organic Farm Stay',
+            location: 'Tuscany, Italy',
+            rating: 4,
+            image: 'https://images.unsplash.com/photo-1594498653385-d5172c532c00'
+        },
+        {
+            name: 'Wind-Powered Lodge',
+            location: 'Scotland Highlands',
+            rating: 4,
+            image: 'https://images.unsplash.com/photo-1585543805890-6051f7829f98'
         }
     ];
     
@@ -349,13 +333,25 @@ function loadAccommodations() {
     });
 }
 
+// Update loadTravelTips with more sustainable tips
 function loadTravelTips() {
     const grid = document.querySelector('.tips-grid');
     const tips = [
-        'Pack reusable items',
-        'Choose eco-friendly transport',
-        'Support local businesses'
-        // Add more tips
+        'Pack reusable items and avoid single-use plastics',
+        'Choose eco-friendly transport options when possible',
+        'Support local businesses and communities',
+        'Use reef-safe sunscreen at beach destinations',
+        'Participate in local conservation efforts',
+        'Choose hotels with green certifications',
+        'Offset your carbon emissions through verified programs',
+        'Use public transportation in cities',
+        'Bring a reusable water bottle and filter',
+        'Respect wildlife and maintain safe distances',
+        'Choose walking tours over motorized ones',
+        'Eat at restaurants that source local ingredients',
+        'Book direct flights when possible to reduce emissions',
+        'Use digital tickets instead of printed ones',
+        'Support indigenous tourism initiatives'
     ];
     
     tips.forEach(tip => {

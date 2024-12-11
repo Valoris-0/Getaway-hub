@@ -6,8 +6,10 @@
     <title>Sustainable Travel Guide</title>
     <link rel="stylesheet" href="test.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-    <!-- Preload hero images for faster loading -->
-    <link rel="preload" as="image" href="https://plus.unsplash.com/premium_photo-1673697239981-389164b7b87f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bmF0dXJlfGVufDB8MHwwfHx8MA%3D%3D">
+    <!-- Replace the preload with these specific images -->
+    <link rel="preload" as="image" href="assets/images/hero-banner.jpg">
+    <link rel="preload" as="image" href="assets/images/eco-destination1.jpg">
+    <link rel="preload" as="image" href="assets/images/eco-destination2.jpg">
 </head>
 <body>
     <nav class="nav-menu">
@@ -59,8 +61,8 @@
     <section id="calculator" class="section">
         <h2>Carbon Footprint Calculator</h2>
         <form id="carbon-calculator">
-            <input type="text" placeholder="Origin">
-            <input type="text" placeholder="Destination">
+            <input type="text" id="origin" placeholder="Origin" required>
+            <input type="text" id="destination" placeholder="Destination" required>
             <select id="transport-mode">
                 <option value="car">Electric Car</option>
                 <option value="bus">Bus</option>
@@ -68,7 +70,7 @@
                 <option value="boat">Passenger Boat</option>
                 <option value="plane">Airplane</option>
             </select>
-            <button type="submit">Calculate Impact</button>
+            <button type="button" id="calculate-btn">Calculate Impact</button>
         </form>
         <div id="calculation-result"></div>
     </section>
