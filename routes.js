@@ -1,4 +1,5 @@
-const distances = {
+// Add this line at the beginning to ensure global availability
+window.distances = {
     'spain-portugal': 503,
     'france-italy': 1421,
     'germany-italy': 1183,

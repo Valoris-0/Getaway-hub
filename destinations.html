@@ -1,89 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sustainable Destinations</title>
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="test.css" />
     <!-- Preload hero images for faster loading -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1465189684280-6a8fa9b19a7a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D">
-</head>
-<body>
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1465189684280-6a8fa9b19a7a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxhbmRzY2FwZXxlbnwwfHwwfHx8MA%3D%3D"
+    />
+  </head>
+  <body>
     <nav class="nav-menu">
-        <a href="index.html">Home</a>
-        <a href="destinations.html">Destinations</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="booking.html">Book Now</a>
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
     </nav>
 
     <header class="hero destinations-hero">
-        <div class="hero-content">
-            <h1>Eco-Friendly Destinations</h1>
-            <p>Discover places that prioritize sustainability</p>
-        </div>
+      <div class="hero-content">
+        <h1>Eco-Friendly Destinations</h1>
+        <p>Discover places that prioritize sustainability</p>
+      </div>
     </header>
 
     <section class="section">
-        <div class="destination-grid">
-            <div class="destination-card">
-                <img src="https://images.unsplash.com/photo-1611223156134-07ade11dfe6a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Costa Rica">
-                <div class="destination-info">
-                    <h3>Costa Rica</h3>
-                    <p>Leader in conservation and renewable energy</p>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="https://plus.unsplash.com/premium_photo-1674086970773-726e445f5802?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aWNlbGFuZHxlbnwwfDB8MHx8fDA%3D" alt="Iceland">
-                <div class="destination-info">
-                    <h3>Iceland</h3>
-                    <p>Renewable energy and pristine nature</p>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="https://plus.unsplash.com/premium_photo-1661963290283-a1883fb9582a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bm9yd2F5fGVufDB8MHwwfHx8MA%3D%3D" alt="Norway">
-                <div class="destination-info">
-                    <h3>Norway</h3>
-                    <p>Sustainable tourism and fjord preservation</p>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="https://images.unsplash.com/photo-1523049820105-c2e73204bac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bmV3JTIwemVhbGFuZHxlbnwwfDB8MHx8fDA%3D" alt="New Zealand">
-                <div class="destination-info">
-                    <h3>New Zealand</h3>
-                    <p>Eco-tourism and biodiversity protection</p>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="https://plus.unsplash.com/premium_photo-1692386759483-c3b25c241acd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Ymh1dGFufGVufDB8MHwwfHx8MA%3D%3D" alt="Bhutan">
-                <div class="destination-info">
-                    <h3>Bhutan</h3>
-                    <p>Carbon negative country with sustainable policies</p>
-                </div>
-            </div>
-            <div class="destination-card">
-                <img src="https://plus.unsplash.com/premium_photo-1669704842950-eb4627682a8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2xvdmVuaWF8ZW58MHwwfDB8fHww" alt="Slovenia">
-                <div class="destination-info">
-                    <h3>Slovenia</h3>
-                    <p>Green destinations and sustainable agriculture</p>
-                </div>
-            </div>
+      <div class="destination-filters">
+        <button class="filter-btn active" data-filter="all">All Destinations</button>
+        <button class="filter-btn" data-filter="nature">Nature</button>
+        <button class="filter-btn" data-filter="cultural">Cultural</button>
+        <button class="filter-btn" data-filter="adventure">Adventure</button>
+        <button class="filter-btn" data-filter="eco-friendly">Eco-Friendly</button>
+      </div>
+
+      <div class="destination-grid">
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://images.unsplash.com/photo-1611223156134-07ade11dfe6a?q=100&w=1920&auto=format&fit=crop"
+            alt="Costa Rica"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>Costa Rica</h3>
+            <p>Leader in conservation and renewable energy</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
         </div>
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1674086970773-726e445f5802?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aWNlbGFuZHxlbnwwfDB8MHx8fDA%3D"
+            alt="Iceland"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>Iceland</h3>
+            <p>Renewable energy and pristine nature</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
+        </div>
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1661963290283-a1883fb9582a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bm9yd2F5fGVufDB8MHwwfHx8MA%3D%3D"
+            alt="Norway"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>Norway</h3>
+            <p>Sustainable tourism and fjord preservation</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
+        </div>
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://images.unsplash.com/photo-1523049820105-c2e73204bac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bmV3JTIwemVhbGFuZHxlbnwwfDB8MHx8fDA%3D"
+            alt="New Zealand"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>New Zealand</h3>
+            <p>Eco-tourism and biodiversity protection</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
+        </div>
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1692386759483-c3b25c241acd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Ymh1dGFufGVufDB8MHwwfHx8MA%3D%3D"
+            alt="Bhutan"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>Bhutan</h3>
+            <p>Carbon negative country with sustainable policies</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
+        </div>
+        <div class="destination-card" data-category="nature eco-friendly">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1669704842950-eb4627682a8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2xvdmVuaWF8ZW58MHwwfDB8fHww"
+            alt="Slovenia"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="destination-info">
+            <h3>Slovenia</h3>
+            <p>Green destinations and sustainable agriculture</p>
+          </div>
+          <div class="eco-stats">
+            <span class="eco-stat">🌿 90% Sustainable</span>
+            <span class="eco-stat">♻️ Zero Waste</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer>
-        <form id="newsletter">
-            <h3>Stay Updated</h3>
-            <input type="email" placeholder="Enter your email">
-            <button type="submit">Subscribe</button>
-        </form>
-        <div class="social-links">
-            <a href="#" class="social-icon">Instagram</a>
-            <a href="#" class="social-icon">Twitter</a>
-            <a href="#" class="social-icon">Facebook</a>
-        </div>
+      <form id="newsletter">
+        <h3>Stay Updated</h3>
+        <input type="email" placeholder="Enter your email" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="social-links">
+        <a href="#" class="social-icon">Instagram</a>
+        <a href="#" class="social-icon">Twitter</a>
+        <a href="#" class="social-icon">Facebook</a>
+      </div>
     </footer>
     <script src="test.js"></script>
-</body>
+  </body>
 </html>

@@ -29,19 +29,43 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setupMapFilters();
 
-    // Replace the form submit handler with a button click handler
+    // Add direct event listener for calculator button
     const calculateBtn = document.getElementById('calculate-btn');
     if (calculateBtn) {
-        calculateBtn.addEventListener('click', calculateCarbon);
+        calculateBtn.addEventListener('click', function() {
+            const origin = document.getElementById('origin').value.trim();
+            const destination = document.getElementById('destination').value.trim();
+            const transportMode = document.getElementById('transport-mode').value;
+
+            console.log('Calculate clicked:', { origin, destination, transportMode }); // Debug log
+
+            if (!origin || !destination) {
+                showCalculationError('Please enter both origin and destination');
+                return;
+            }
+
+            handleCalculation(origin, destination, transportMode);
+        });
     }
+
+    initializeDestinationPage();
 });
 
-// Modify calculateCarbon to prevent form submission
-async function calculateCarbon() {
-    const origin = document.getElementById('origin').value.toLowerCase().trim();
-    const destination = document.getElementById('destination').value.toLowerCase().trim();
-    const transportMode = document.getElementById('transport-mode').value;
-    
+// Add new helper function for error display
+function showCalculationError(message) {
+    const result = document.getElementById('calculation-result');
+    result.innerHTML = `
+        <div class="calculation-error">
+            <p>⚠️ ${message}</p>
+        </div>
+    `;
+}
+
+// Add new function to handle the calculation
+function handleCalculation(origin, destination, transportMode) {
+    console.log('Starting calculation...'); // Debug log
+    console.log('Available distances:', Object.keys(distances).length); // Debug log
+
     const emissionFactors = {
         train: 0.041,
         car: 0.171,
@@ -51,58 +75,74 @@ async function calculateCarbon() {
     };
 
     try {
-        // Show loading state
         const result = document.getElementById('calculation-result');
-        result.innerHTML = '<div class="loading">Calculating...</div>';
+        result.innerHTML = '<div class="loading-spinner">Calculating...</div>';
 
         const distance = getDistance(origin, destination);
+        console.log('Found distance:', distance); // Debug log
+
         if (!distance) {
-            throw new Error('Route not found');
+            throw new Error(`No route found between ${origin} and ${destination}`);
         }
 
         const carbonFootprint = Math.round(distance * emissionFactors[transportMode]);
 
         result.innerHTML = `
-            <div style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 2rem;">
-                <h3>Estimated Carbon Footprint</h3>
-                <p>From: ${origin.charAt(0).toUpperCase() + origin.slice(1)}</p>
-                <p>To: ${destination.charAt(0).toUpperCase() + destination.slice(1)}</p>
-                <p>Total Distance: ${Math.round(distance)} km</p>
-                <p>Transport Mode: ${transportMode.charAt(0).toUpperCase() + transportMode.slice(1)}</p>
-                <p><strong>Total CO2 Emissions: ${carbonFootprint} kg CO2</strong></p>
+            <div class="calculation-result">
+                <div class="result-header">
+                    <h3>📊 Carbon Footprint Result</h3>
+                </div>
+                <div class="result-details">
+                    <div class="result-row">
+                        <span>From:</span>
+                        <strong>${origin.charAt(0).toUpperCase() + origin.slice(1)}</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>To:</span>
+                        <strong>${destination.charAt(0).toUpperCase() + destination.slice(1)}</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Distance:</span>
+                        <strong>${Math.round(distance)} km</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Transport:</span>
+                        <strong>${transportMode.charAt(0).toUpperCase() + transportMode.slice(1)}</strong>
+                    </div>
+                    <div class="result-total">
+                        <span>Total CO2:</span>
+                        <strong>${carbonFootprint} kg CO2</strong>
+                    </div>
+                </div>
                 ${getSustainabilityTip(transportMode, carbonFootprint)}
-                <p class="comparison">This is equivalent to ${(carbonFootprint / 0.0115).toFixed(1)} trees needed to absorb this CO2 in one year.</p>
+                <div class="result-comparison">
+                    <p>🌳 This is equivalent to ${(carbonFootprint / 0.0115).toFixed(1)} trees needed for a year to absorb this CO2.</p>
+                </div>
             </div>
         `;
     } catch (error) {
-        const result = document.getElementById('calculation-result');
-        result.innerHTML = `
-            <div style="background: #fee; padding: 2rem; border-radius: 10px; margin-top: 2rem;">
-                <p style="color: #c00;">Sorry, couldn't find a route between ${origin} and ${destination}. Please check your input and try again.</p>
-            </div>
-        `;
+        console.error('Calculation error:', error); // Debug log
+        showCalculationError(error.message);
     }
 }
 
 let distances = {};
 
-// Add this function to load the distances
+// Update loadDistances to properly import routes
 async function loadDistances() {
     try {
-        const response = await fetch('routes.js');
-        const text = await response.text();
-        // Extract the object from the module.exports
-        const objectText = text.replace('const distances = ', '').replace('module.exports = distances;', '');
-        distances = JSON.parse(objectText);
+        // Get routes directly from the routes.js file that's already included in the HTML
+        distances = window.distances || {};
         console.log('Distances loaded:', Object.keys(distances).length);
+        return distances;
     } catch (error) {
         console.error('Error loading distances:', error);
+        return {};
     }
 }
 
 // A function to retrieve the distance, regardless of direction
 function getDistance(from, to) {
-    // Normalize and format inputs
     from = formatCountryName(from);
     to = formatCountryName(to);
     
@@ -114,18 +154,27 @@ function getDistance(from, to) {
         `${standardizeCountryName(to)}-${standardizeCountryName(from)}`
     ];
 
-    // Log for debugging
-    console.log('Trying combinations:', combinations);
+    console.log('Trying combinations:', combinations); // Debug log
     
-    // Check each combination
     for (const route of combinations) {
         if (distances[route]) {
-            console.log('Found route:', route, 'distance:', distances[route]);
+            console.log('Found route:', route, 'distance:', distances[route]); // Debug log
             return distances[route];
         }
     }
     
-    console.log('No route found for:', from, to);
+    // If no direct route found, try to find similar routes
+    const allRoutes = Object.keys(distances);
+    for (const route of allRoutes) {
+        const [start, end] = route.split('-');
+        if ((start.includes(from) || from.includes(start)) && 
+            (end.includes(to) || to.includes(end))) {
+            console.log('Found similar route:', route, 'distance:', distances[route]); // Debug log
+            return distances[route];
+        }
+    }
+    
+    console.log('No route found for:', from, to); // Debug log
     return null;
 }
 
@@ -261,7 +310,7 @@ function calculateRoughDistance(origin, destination) {
     return Math.floor(Math.random() * 1800 + 200);
 }
 
-// Update loadAccommodations with more eco-friendly stays
+// Update loadAccommodations with high-quality image URLs
 function loadAccommodations() {
     const grid = document.querySelector('.accommodation-grid');
     const accommodations = [
@@ -269,25 +318,29 @@ function loadAccommodations() {
             name: 'Eco Resort Costa Rica', 
             location: 'Guanacaste, Costa Rica', 
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1665986428487-fd10823de57e'
+            image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=2070',
+            description: 'Luxury eco-resort nestled in the heart of Costa Rica\'s pristine rainforest.'
         },
         { 
             name: 'Green Hotel', 
             location: 'Manuel Antonio, Costa Rica', 
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1669070888597-c3ccea5f0490'
+            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2070',
+            description: 'Sustainable boutique hotel with panoramic ocean views.'
         },
         { 
             name: 'Rainforest Lodge', 
             location: 'Monteverde, Costa Rica', 
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1648824583079-882553ad78b8'
+            image: 'https://images.unsplash.com/photo-1470165301023-58dab8118cc9?q=80&w=2070',
+            description: 'Immersive rainforest experience with private hiking trails.'
         },
         { 
             name: 'Beach Eco Resort', 
             location: 'Tamarindo, Costa Rica', 
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1659511167968-01108951f78b'
+            image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=2070',
+            description: 'Beachfront eco-resort with world-class sustainability practices.'
         },
         { 
             name: 'Sustainable Mountain Lodge',
@@ -323,13 +376,133 @@ function loadAccommodations() {
             name: 'Wind-Powered Lodge',
             location: 'Scotland Highlands',
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1585543805890-6051f7829f98'
+            image: 'https://images.unsplash.com/photo-1585543805890-6051f7829f98?q=100&w=1920&auto=format&fit=crop'
+        },
+        {
+            name: 'Desert Eco Lodge',
+            location: 'Dubai, UAE',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1542401886-65d6c61db217?q=100&w=1920&auto=format&fit=crop',
+            description: 'Solar-powered desert oasis with sustainable water management'
+        },
+        {
+            name: 'Arctic Ice Hotel',
+            location: 'Rovaniemi, Finland',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1626268220143-33e731d4aa1c?q=80&w=2070',
+            description: 'Seasonal eco-lodge built with renewable materials and powered by renewable energy.'
+        },
+        {
+            name: 'Forest Canopy Resort',
+            location: 'British Columbia, Canada',
+            rating: 4,
+            image: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=100&w=1920&auto=format&fit=crop',
+            description: 'Minimal impact treetop lodging in old growth forest'
         }
     ];
     
+    grid.innerHTML = ''; // Clear existing content
     accommodations.forEach(acc => {
-        const card = createAccommodationCard(acc);
+        const card = createEnhancedAccommodationCard(acc);
         grid.appendChild(card);
+    });
+}
+
+function createEnhancedAccommodationCard(acc) {
+    const div = document.createElement('div');
+    div.className = 'accommodation-card';
+    
+    // Add amenities and details to the accommodation object
+    acc.amenities = acc.amenities || [
+        { icon: '🌱', name: 'Sustainable Practices' },
+        { icon: '♻️', name: 'Waste Recycling' },
+        { icon: '💧', name: 'Water Conservation' },
+        { icon: '🔋', name: 'Renewable Energy' },
+        { icon: '🌿', name: 'Organic Garden' },
+        { icon: '🏃', name: 'Eco-Activities' }
+    ];
+    
+    acc.details = acc.details || {
+        sustainability: 'This eco-friendly accommodation implements various sustainable practices to minimize environmental impact.',
+        location: 'Situated in a pristine natural environment, carefully chosen to preserve local ecosystems.',
+        activities: 'Offers various eco-friendly activities and educational programs about sustainable living.'
+    };
+
+    div.innerHTML = `
+        <div class="card-image-container">
+            <img src="${acc.image}" alt="${acc.name}" loading="lazy">
+            <div class="eco-badge">♻️ Eco-Certified</div>
+        </div>
+        <div class="card-content">
+            <h3>${acc.name}</h3>
+            <p class="location">📍 ${acc.location}</p>
+            <div class="rating">${'★'.repeat(acc.rating)}${'☆'.repeat(5-acc.rating)}</div>
+            <button class="learn-more-btn" data-id="${acc.name.replace(/\s+/g, '-').toLowerCase()}">Learn More</button>
+        </div>
+    `;
+
+    const learnMoreBtn = div.querySelector('.learn-more-btn');
+    learnMoreBtn.addEventListener('click', () => showAccommodationDetails(acc));
+
+    return div;
+}
+
+function showAccommodationDetails(acc) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <button class="modal-close">×</button>
+            <img src="${acc.image}" alt="${acc.name}" style="width:100%; height:300px; object-fit:cover; border-radius:15px;">
+            <h2 style="margin:1rem 0">${acc.name}</h2>
+            <p class="location">📍 ${acc.location}</p>
+            <div class="rating" style="margin:1rem 0">${'★'.repeat(acc.rating)}${'☆'.repeat(5-acc.rating)}</div>
+            
+            <div class="details-section">
+                <h3>Sustainability Features</h3>
+                <div class="amenities-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:1rem; margin:1rem 0;">
+                    ${acc.amenities.map(amenity => `
+                        <div class="amenity-item" style="display:flex; align-items:center; gap:0.5rem;">
+                            <span>${amenity.icon}</span>
+                            <span>${amenity.name}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <h3>About This Location</h3>
+                <p>${acc.details.sustainability}</p>
+                <p>${acc.details.location}</p>
+                
+                <h3>Activities & Programs</h3>
+                <p>${acc.details.activities}</p>
+                
+                <button class="book-now-btn" style="width:100%; padding:1rem; background:var(--primary-color); color:white; border:none; border-radius:8px; margin-top:1rem; cursor:pointer;">
+                    Book Your Eco-Stay
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.add('active'), 10);
+
+    const closeBtn = modal.querySelector('.modal-close');
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        setTimeout(() => modal.remove(), 300);
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            setTimeout(() => modal.remove(), 300);
+        }
+    });
+
+    const bookBtn = modal.querySelector('.book-now-btn');
+    bookBtn.addEventListener('click', () => {
+        window.location.href = 'booking.html';
     });
 }
 
@@ -337,27 +510,49 @@ function loadAccommodations() {
 function loadTravelTips() {
     const grid = document.querySelector('.tips-grid');
     const tips = [
-        'Pack reusable items and avoid single-use plastics',
-        'Choose eco-friendly transport options when possible',
-        'Support local businesses and communities',
-        'Use reef-safe sunscreen at beach destinations',
-        'Participate in local conservation efforts',
-        'Choose hotels with green certifications',
-        'Offset your carbon emissions through verified programs',
-        'Use public transportation in cities',
-        'Bring a reusable water bottle and filter',
-        'Respect wildlife and maintain safe distances',
-        'Choose walking tours over motorized ones',
-        'Eat at restaurants that source local ingredients',
-        'Book direct flights when possible to reduce emissions',
-        'Use digital tickets instead of printed ones',
-        'Support indigenous tourism initiatives'
+        {
+            icon: '🌱',
+            title: 'Zero Waste Travel',
+            description: 'Pack reusable items like water bottles, bags, and utensils to minimize waste during your journey.',
+            category: 'Environment'
+        },
+        {
+            icon: '🚲',
+            title: 'Local Transport',
+            description: 'Use public transportation, bike rentals, or walk to reduce your carbon footprint while exploring.',
+            category: 'Transport'
+        },
+        {
+            icon: '🏘️',
+            title: 'Community Support',
+            description: 'Choose locally-owned accommodations and restaurants to support the local economy.',
+            category: 'Community'
+        },
+        // Add more detailed tips
     ];
     
+    grid.innerHTML = ''; // Clear existing content
     tips.forEach(tip => {
-        const card = createTipCard(tip);
+        const card = createEnhancedTipCard(tip);
         grid.appendChild(card);
     });
+}
+
+function createEnhancedTipCard(tip) {
+    const div = document.createElement('div');
+    div.className = 'tip-card';
+    div.innerHTML = `
+        <div class="tip-content">
+            <div class="tip-icon">${tip.icon}</div>
+            <h3>${tip.title}</h3>
+            <p>${tip.description}</p>
+            <div class="tip-actions">
+                <button class="tip-button">Learn More</button>
+                <span class="tip-category">${tip.category || 'General'}</span>
+            </div>
+        </div>
+    `;
+    return div;
 }
 
 function handleNewsletter() {
@@ -365,6 +560,7 @@ function handleNewsletter() {
     alert('Thank you for subscribing!');
 }
 
+// Add image quality optimization to createAccommodationCard
 function createAccommodationCard(acc) {
     const div = document.createElement('div');
     div.className = 'accommodation-card';
@@ -374,6 +570,8 @@ function createAccommodationCard(acc) {
             alt="${acc.name}" 
             loading="lazy" 
             style="opacity: 1; min-height: 200px;"
+            fetchpriority="high"
+            decoding="async"
         >
         <h3>${acc.name}</h3>
         <p>${acc.location}</p>
@@ -417,7 +615,7 @@ window.addEventListener('scroll', () => {
 });
 */
 
-// Image loading optimization
+// Update optimizeImages function
 function optimizeImages() {
     const images = document.querySelectorAll('img[data-src]');
     
@@ -425,7 +623,13 @@ function optimizeImages() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.src = img.dataset.src;
+                // Add high quality parameters to data-src URLs
+                const highQualityUrl = img.dataset.src.includes('?') 
+                    ? `${img.dataset.src}&q=100&w=1920` 
+                    : `${img.dataset.src}?q=100&w=1920`;
+                img.src = highQualityUrl;
+                img.setAttribute('fetchpriority', 'high');
+                img.setAttribute('decoding', 'async');
                 img.addEventListener('load', () => {
                     img.classList.add('loaded');
                 });
@@ -484,8 +688,6 @@ function loadBookingConfirmation() {
     // Get stored booking data
     const bookingData = JSON.parse(localStorage.getItem('bookingData')) || {
         destination: 'Default Resort',
-        checkIn: '2024-01-01',
-        checkOut: '2024-01-08',
         guests: '2',
         roomType: 'standard',
         name: 'Guest',
@@ -551,6 +753,26 @@ function getPreferencesHTML(preferences) {
             <ul class="preferences-list">
                 ${selectedPreferences.join('')}
             </ul>
+            ${getPreferencesHTML(bookingData.preferences)}
         </div>
     ` : '';
+}
+
+function setupMapFilters() {
+    const mapFilters = document.querySelectorAll('.map-filters button');
+    const mapImages = document.querySelector('.map-images');
+
+    mapFilters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const images = JSON.parse(filter.dataset.images);
+            mapImages.innerHTML = images.map(src => `
+                <img src="${src}" alt="Destination" class="map-image" />
+            `).join('');
+        });
+    });
+}
+
+function initializeMap() {
+    // This can be empty if you're not using an actual map
+    console.log('Map initialized');
 }

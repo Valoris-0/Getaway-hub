@@ -1,103 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sustainable Travel Guide</title>
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="test.css" />
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
     <!-- Replace the preload with these specific images -->
-    <link rel="preload" as="image" href="assets/images/hero-banner.jpg">
-    <link rel="preload" as="image" href="assets/images/eco-destination1.jpg">
-    <link rel="preload" as="image" href="assets/images/eco-destination2.jpg">
-</head>
-<body>
+    <link rel="preload" as="image" href="assets/images/hero-banner.jpg" />
+    <link rel="preload" as="image" href="assets/images/eco-destination1.jpg" />
+    <link rel="preload" as="image" href="assets/images/eco-destination2.jpg" />
+  </head>
+  <body>
     <nav class="nav-menu">
-        <a href="index.html">Home</a>
-        <a href="destinations.html">Destinations</a>
-        <a href="about.html">About Us</a>
-        <a href="services.html">Services</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="booking.html">Book Now</a>
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="about.html">About Us</a>
+      <a href="services.html">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
     </nav>
     <header class="hero home-hero">
-        <div class="hero-content">
-            <h1>Discover Sustainable Travel</h1>
-            <p>Explore the world while preserving it for future generations</p>
-            <button class="cta-button">Start Your Eco-Journey</button>
-        </div>
-        <div class="scroll-indicator">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-            </svg>
-        </div>
+      <div class="hero-content">
+        <h1>Discover Sustainable Travel</h1>
+        <p>Explore the world while preserving it for future generations</p>
+        <button class="cta-button">Start Your Eco-Journey</button>
+      </div>
+      <div class="scroll-indicator">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+          <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+        </svg>
+      </div>
     </header>
 
     <section id="intro" class="section">
+      <div class="section-header">
         <h2>Why Sustainable Travel?</h2>
-        <p>Discover how conscious travel choices can make a positive impact on our planet while creating unforgettable experiences.</p>
+        <p class="section-subtitle">Join the movement towards responsible tourism and make a lasting positive impact.</p>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <span class="intro-icon">🌍</span>
+          <h3>Environmental Impact</h3>
+          <p>Reduce your carbon footprint through eco-conscious choices. Your actions today shape tomorrow's world.</p>
+          <ul class="impact-list">
+            <li>Reduce carbon emissions</li>
+            <li>Protect wildlife habitats</li>
+            <li>Minimize waste</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <span class="intro-icon">👥</span>
+          <h3>Community Support</h3>
+          <p>Empower local communities through sustainable tourism that benefits residents directly.</p>
+          <ul class="impact-list">
+            <li>Support local businesses</li>
+            <li>Preserve cultural heritage</li>
+            <li>Create sustainable jobs</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <span class="intro-icon">🌱</span>
+          <h3>Future Preservation</h3>
+          <p>Ensure destinations remain beautiful and vibrant for generations to come.</p>
+          <ul class="impact-list">
+            <li>Protect ecosystems</li>
+            <li>Sustainable development</li>
+            <li>Cultural preservation</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <span class="intro-icon">💚</span>
+          <h3>Personal Growth</h3>
+          <p>Experience meaningful connections and transformative experiences through conscious travel.</p>
+          <ul class="impact-list">
+            <li>Authentic experiences</li>
+            <li>Cultural exchange</li>
+            <li>Mindful travel</li>
+          </ul>
+        </div>
+      </div>
+      <div class="impact-stats">
+        <div class="stat-item">
+          <span class="stat-number">30%</span>
+          <p>Reduced carbon footprint through sustainable travel choices</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">2x</span>
+          <p>More money stays in local communities</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">80%</span>
+          <p>Travelers prefer eco-friendly options</p>
+        </div>
+      </div>
     </section>
 
-    <section id="map" class="section">
+    <section id="destinations" class="section">
+      <div class="section-header">
         <h2>Eco-Friendly Destinations</h2>
-        <div id="interactive-map">
-            <div class="map-images"></div>
-        </div>
-        <div class="map-filters">
-            <button data-filter="nature" data-images='[
-                "https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bGFuZHNjYXBlfGVufDB8fDB8fHww"  
-            ]'>Nature</button>
-            <button data-filter="cultural" data-images='[
-                "https://images.unsplash.com/photo-1601731405034-5d9e1a3a1d30?auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1577303886426-e505d4631531?auto=format&fit=crop&q=80"
-            ]'>Cultural</button>
-            <button data-filter="urban" data-images='[
-                "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80"
-            ]'>Urban</button>
-        </div>
+        <p>Explore places that prioritize environmental conservation and sustainable tourism</p>
+      </div>
+      <div id="interactive-map">
+        <div class="map-images"></div>
+      </div>
+      <div class="map-filters">
+        <button
+          data-filter="nature"
+          data-images='[
+                "https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?q=100&w=1920&auto=format&fit=crop"  
+            ]'
+        >
+          Nature
+        </button>
+        <button
+          data-filter="cultural"
+          data-images='[
+                "https://images.unsplash.com/photo-1601731405034-5d9e1a3a1d30?q=100&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1577303886426-e505d4631531?q=100&w=1920&auto=format&fit=crop"
+            ]'
+        >
+          Cultural
+        </button>
+        <button
+          data-filter="urban"
+          data-images='[
+                "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=100&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1444723121867-7a241cacace9?q=100&w=1920&auto=format&fit=crop"
+            ]'
+        >
+          Urban
+        </button>
+      </div>
     </section>
 
     <section id="calculator" class="section">
+      <div class="section-header">
         <h2>Carbon Footprint Calculator</h2>
-        <form id="carbon-calculator">
-            <input type="text" id="origin" placeholder="Origin" required>
-            <input type="text" id="destination" placeholder="Destination" required>
+        <p class="section-subtitle">Measure and understand your travel impact on the environment</p>
+      </div>
+      <div class="calculator-wrapper">
+        <div id="calculator-form">
+          <div class="form-group">
+            <label for="origin">Starting Point</label>
+            <input type="text" id="origin" placeholder="Enter country of origin" required>
+          </div>
+          <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" placeholder="Enter destination country" required>
+          </div>
+          <div class="form-group">
+            <label for="transport-mode">Mode of Transport</label>
             <select id="transport-mode">
-                <option value="car">Electric Car</option>
-                <option value="bus">Bus</option>
-                <option value="train">Train</option>
-                <option value="boat">Passenger Boat</option>
-                <option value="plane">Airplane</option>
+              <option value="car">Electric Car</option>
+              <option value="bus">Bus</option>
+              <option value="train">Train</option>
+              <option value="boat">Passenger Boat</option>
+              <option value="plane">Airplane</option>
             </select>
-            <button type="button" id="calculate-btn">Calculate Impact</button>
-        </form>
+          </div>
+          <button type="button" id="calculate-btn">Calculate Impact</button>
+        </div>
         <div id="calculation-result"></div>
+      </div>
     </section>
 
     <section id="accommodations" class="section">
+      <div class="section-header">
         <h2>Eco-Friendly Stays</h2>
-        <div class="accommodation-grid"></div>
+        <p>Discover accommodations that combine comfort with environmental responsibility</p>
+      </div>
+      <div class="accommodation-grid"></div>
     </section>
 
     <section id="tips" class="section">
+      <div class="section-header">
         <h2>Sustainable Travel Tips</h2>
-        <div class="tips-grid"></div>
+        <p>Simple ways to make your travels more environmentally friendly</p>
+      </div>
+      <div class="tips-grid"></div>
     </section>
 
     <footer>
-        <form id="newsletter">
-            <h3>Stay Updated</h3>
-            <input type="email" placeholder="Enter your email">
-            <button type="submit">Subscribe</button>
-        </form>
-        <div class="social-links">
-            <a href="#" class="social-icon">Instagram</a>
-            <a href="#" class="social-icon">Twitter</a>
-            <a href="#" class="social-icon">Facebook</a>
-        </div>
+      <form id="newsletter">
+        <h3>Stay Updated</h3>
+        <input type="email" placeholder="Enter your email" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="social-links">
+        <a href="#" class="social-icon">Instagram</a>
+        <a href="#" class="social-icon">Twitter</a>
+        <a href="#" class="social-icon">Facebook</a>
+      </div>
     </footer>
     <script src="routes.js"></script>
     <script src="test.js"></script>
-</body>
+  </body>
 </html>
