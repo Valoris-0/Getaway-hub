@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Eco-Stay</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Book Now</a>
+    </nav>
+
+    <section class="booking-section">
+        <div class="container">
+            <form id="booking-form" class="booking-form">
+                <h2>Book Your Eco-Stay</h2>
+                
+                <div class="form-group">
+                    <label for="booking-destination">Select Your Dream Eco-Destination</label>
+                    <select id="booking-destination" required>
+                        <option value="">Choose a Destination</option>
+                        <optgroup label="Americas">
+                            <option value="Eco Resort Costa Rica">Eco Resort Costa Rica</option>
+                            <option value="Sustainable Lodge Amazon">Sustainable Lodge Amazon</option>
+                            <option value="Mountain Retreat Colorado">Mountain Retreat Colorado</option>
+                            <option value="Eco Beach Resort Mexico">Eco Beach Resort Mexico</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="Green Hotel Sweden">Green Hotel Sweden</option>
+                            <option value="Sustainable Lodge Norway">Sustainable Lodge Norway</option>
+                            <option value="Alpine Eco Resort Switzerland">Alpine Eco Resort Switzerland</option>
+                            <option value="Mediterranean Eco Villa">Mediterranean Eco Villa</option>
+                        </optgroup>
+                        <optgroup label="Asia">
+                            <option value="Jungle Retreat Thailand">Jungle Retreat Thailand</option>
+                            <option value="Mountain Lodge Nepal">Mountain Lodge Nepal</option>
+                            <option value="Eco Island Resort Maldives">Eco Island Resort Maldives</option>
+                            <option value="Forest Resort Japan">Forest Resort Japan</option>
+                        </optgroup>
+                        <optgroup label="Africa">
+                            <option value="Safari Eco Lodge Kenya">Safari Eco Lodge Kenya</option>
+                            <option value="Desert Retreat Morocco">Desert Retreat Morocco</option>
+                            <option value="Coastal Eco Resort Tanzania">Coastal Eco Resort Tanzania</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="form-group date-group">
+                    <div>
+                        <label for="check-in">Check-in Date</label>
+                        <input type="date" id="check-in" required min="<?php echo date('Y-m-d'); ?>">
+                    </div>
+                    <div>
+                        <label for="check-out">Check-out Date</label>
+                        <input type="date" id="check-out" required>
+                    </div>
+                </div>
+
+                <div class="form-group guest-details">
+                    <div>
+                        <label for="guests">Number of Guests</label>
+                        <input type="number" id="guests" min="1" max="10" required>
+                    </div>
+                    <div>
+                        <label for="room-type">Room Type</label>
+                        <select id="room-type" required>
+                            <option value="standard">Standard Eco Room</option>
+                            <option value="deluxe">Deluxe Green Suite</option>
+                            <option value="premium">Premium Sustainable Villa</option>
+                            <option value="family">Family Eco Lodge</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group personal-info">
+                    <div>
+                        <label for="guest-name">Full Name</label>
+                        <input type="text" id="guest-name" required>
+                    </div>
+                    <div>
+                        <label for="guest-email">Email</label>
+                        <input type="email" id="guest-email" required>
+                    </div>
+                    <div>
+                        <label for="guest-phone">Phone Number</label>
+                        <input type="tel" id="guest-phone" required>
+                    </div>
+                </div>
+
+                <div class="form-group preferences">
+                    <h3>Special Preferences</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="vegetarian"> Vegetarian Meals
+                        </label>
+                        <label>
+                            <input type="checkbox" id="early-check-in"> Early Check-in
+                        </label>
+                        <label>
+                            <input type="checkbox" id="airport-transfer"> Airport Transfer
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="booking-submit">Confirm Booking</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <form id="newsletter">
+            <h3>Stay Updated</h3>
+            <input type="email" placeholder="Enter your email">
+            <button type="submit">Subscribe</button>
+        </form>
+        <div class="social-links">
+            <a href="#" class="social-icon">Instagram</a>
+            <a href="#" class="social-icon">Twitter</a>
+            <a href="#" class="social-icon">Facebook</a>
+        </div>
+    </footer>
+    <script src="test.js"></script>
+    <script src="booking.js"></script>
+</body>
+</html>

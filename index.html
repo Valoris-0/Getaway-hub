@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Travel Guide</title>
+    <link rel="stylesheet" href="test.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <!-- Preload hero images for faster loading -->
+    <link rel="preload" as="image" href="https://plus.unsplash.com/premium_photo-1673697239981-389164b7b87f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bmF0dXJlfGVufDB8MHwwfHx8MA%3D%3D">
+</head>
+<body>
+    <nav class="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="about.html">About Us</a>
+        <a href="services.html">Services</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Book Now</a>
+    </nav>
+    <header class="hero home-hero">
+        <div class="hero-content">
+            <h1>Discover Sustainable Travel</h1>
+            <p>Explore the world while preserving it for future generations</p>
+            <button class="cta-button">Start Your Eco-Journey</button>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </div>
+    </header>
+
+    <section id="intro" class="section">
+        <h2>Why Sustainable Travel?</h2>
+        <p>Discover how conscious travel choices can make a positive impact on our planet while creating unforgettable experiences.</p>
+    </section>
+
+    <section id="map" class="section">
+        <h2>Eco-Friendly Destinations</h2>
+        <div id="interactive-map">
+            <div class="map-images"></div>
+        </div>
+        <div class="map-filters">
+            <button data-filter="nature" data-images='[
+                "https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bGFuZHNjYXBlfGVufDB8fDB8fHww"  
+            ]'>Nature</button>
+            <button data-filter="cultural" data-images='[
+                "https://images.unsplash.com/photo-1601731405034-5d9e1a3a1d30?auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1577303886426-e505d4631531?auto=format&fit=crop&q=80"
+            ]'>Cultural</button>
+            <button data-filter="urban" data-images='[
+                "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80"
+            ]'>Urban</button>
+        </div>
+    </section>
+
+    <section id="calculator" class="section">
+        <h2>Carbon Footprint Calculator</h2>
+        <form id="carbon-calculator">
+            <input type="text" placeholder="Origin">
+            <input type="text" placeholder="Destination">
+            <select id="transport-mode">
+                <option value="car">Electric Car</option>
+                <option value="bus">Bus</option>
+                <option value="train">Train</option>
+                <option value="boat">Passenger Boat</option>
+                <option value="plane">Airplane</option>
+            </select>
+            <button type="submit">Calculate Impact</button>
+        </form>
+        <div id="calculation-result"></div>
+    </section>
+
+    <section id="accommodations" class="section">
+        <h2>Eco-Friendly Stays</h2>
+        <div class="accommodation-grid"></div>
+    </section>
+
+    <section id="tips" class="section">
+        <h2>Sustainable Travel Tips</h2>
+        <div class="tips-grid"></div>
+    </section>
+
+    <footer>
+        <form id="newsletter">
+            <h3>Stay Updated</h3>
+            <input type="email" placeholder="Enter your email">
+            <button type="submit">Subscribe</button>
+        </form>
+        <div class="social-links">
+            <a href="#" class="social-icon">Instagram</a>
+            <a href="#" class="social-icon">Twitter</a>
+            <a href="#" class="social-icon">Facebook</a>
+        </div>
+    </footer>
+    <script src="test.js"></script>
+</body>
+</html>
