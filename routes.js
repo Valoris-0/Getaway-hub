@@ -1,4 +1,10 @@
-// Add this line at the beginning to ensure global availability
+/**
+ * Global distances lookup object
+ * Used in: test.js
+ * - loadDistances() (line 165)
+ * - getDistance() (line 182)
+ * Format: 'origin-destination': distance in kilometers
+ */
 window.distances = {
     'spain-portugal': 503,
     'france-italy': 1421,

@@ -1,4 +1,15 @@
+/**
+ * Form elements used across functions:
+ * - bookingForm: Main form element (line 8)
+ * - startDate: Check-in date input (line 9)
+ * - endDate: Check-out date input (line 10)
+ * Used in: 
+ * - DOMContentLoaded event (line 7)
+ * - validateForm (line 42)
+ * - submitBooking (line 51)
+ */
 document.addEventListener('DOMContentLoaded', () => {
+    // Get form elements
     const bookingForm = document.getElementById('booking-form');
     const startDate = document.getElementById('start-date');
     const endDate = document.getElementById('end-date');
@@ -27,20 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+/**
+ * Local variables in validateForm:
+ * No specific variables, returns boolean
+ * Called from: form submit handler (line 24)
+ */
 function validateForm() {
     // Add form validation logic
     return true;
 }
 
+/**
+ * Local variables in submitBooking:
+ * Returns: Promise<void>
+ * Called from: form submit handler (line 25)
+ */
 async function submitBooking() {
     // Simulate API call with delay
     return new Promise(resolve => setTimeout(resolve, 1000));
 }
 
+/**
+ * Displays booking confirmation message
+ * Called from: successful form submission
+ */
 function showConfirmation() {
     alert('Booking confirmed! Check your email for confirmation details.');
 }
 
+/**
+ * Error display function
+ * @param {string} message - Error text to show
+ * Called from: form submit handler (line 28)
+ */
 function showError(message) {
     alert(message);
 }

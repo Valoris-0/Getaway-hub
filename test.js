@@ -1,3 +1,11 @@
+/**
+ * Main event listener for DOM initialization
+ * Initializes all core functionalities:
+ * - Distance data loading
+ * - Map initialization
+ * - Newsletter handling 
+ * - Calculator setup
+ */
 document.addEventListener("DOMContentLoaded", async () => {
   await loadDistances();
   // Initialize the map
@@ -51,7 +59,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   initializeDestinationPage();
 });
 
-// Add new helper function for error display
+/**
+ * Displays calculation errors in the result div
+ * @param {string} message - Error message to display
+ * Used in: handleCalculation (line ~140)
+ */
 function showCalculationError(message) {
   const result = document.getElementById("calculation-result");
   result.innerHTML = `
@@ -61,7 +73,16 @@ function showCalculationError(message) {
     `;
 }
 
-// Add new function to handle the calculation
+/**
+ * Handles carbon footprint calculation
+ * Uses variables:
+ * - distances (from routes.js)
+ * - emissionFactors (defined internally)
+ * @param {string} origin - Starting location
+ * @param {string} destination - End location
+ * @param {string} transportMode - Mode of transport
+ * Called from: DOMContentLoaded event listener (line ~30)
+ */
 function handleCalculation(origin, destination, transportMode) {
   console.log("Starting calculation..."); // Debug log
   console.log("Available distances:", Object.keys(distances).length); // Debug log
@@ -70,7 +91,7 @@ function handleCalculation(origin, destination, transportMode) {
     train: 0.041,
     car: 0.171,
     bus: 0.089,
-    boat: 0.190,
+    boat: 0.19,
     plane: 0.255,
   };
 
@@ -86,7 +107,7 @@ function handleCalculation(origin, destination, transportMode) {
     }
 
     const carbonFootprint = Math.round(
-      distance * emissionFactors[transportMode],
+      distance * emissionFactors[transportMode]
     );
 
     result.innerHTML = `
@@ -98,14 +119,15 @@ function handleCalculation(origin, destination, transportMode) {
                     <div class="result-row">
                         <span>From:</span>
                         <strong>${
-      origin.charAt(0).toUpperCase() + origin.slice(1)
-    }</strong>
+                          origin.charAt(0).toUpperCase() + origin.slice(1)
+                        }</strong>
                     </div>
                     <div class="result-row">
                         <span>To:</span>
                         <strong>${
-      destination.charAt(0).toUpperCase() + destination.slice(1)
-    }</strong>
+                          destination.charAt(0).toUpperCase() +
+                          destination.slice(1)
+                        }</strong>
                     </div>
                     <div class="result-row">
                         <span>Distance:</span>
@@ -114,8 +136,9 @@ function handleCalculation(origin, destination, transportMode) {
                     <div class="result-row">
                         <span>Transport:</span>
                         <strong>${
-      transportMode.charAt(0).toUpperCase() + transportMode.slice(1)
-    }</strong>
+                          transportMode.charAt(0).toUpperCase() +
+                          transportMode.slice(1)
+                        }</strong>
                     </div>
                     <div class="result-total">
                         <span>Total CO2:</span>
@@ -124,9 +147,11 @@ function handleCalculation(origin, destination, transportMode) {
                 </div>
                 ${getSustainabilityTip(transportMode, carbonFootprint)}
                 <div class="result-comparison">
-                    <p>🌳 This is equivalent to ${
-      (carbonFootprint / 0.0115).toFixed(1)
-    } trees needed for a year to absorb this CO2.</p>
+                    <p>🌳 This is equivalent to ${(
+                      carbonFootprint / 0.0115
+                    ).toFixed(
+                      1
+                    )} trees needed for a year to absorb this CO2.</p>
                 </div>
             </div>
         `;
@@ -136,9 +161,18 @@ function handleCalculation(origin, destination, transportMode) {
   }
 }
 
+/**
+ * Global distances object loaded from routes.js
+ * Used in: getDistance(), loadDistances()
+ */
 let distances = {};
 
-// Update loadDistances to properly import routes
+/**
+ * Loads distance data from routes.js
+ * Initializes global distances object
+ * Called from: DOMContentLoaded event listener
+ * Returns: Object containing route distances
+ */
 async function loadDistances() {
   try {
     // Get routes directly from the routes.js file that's already included in the HTML
@@ -151,7 +185,13 @@ async function loadDistances() {
   }
 }
 
-// A function to retrieve the distance, regardless of direction
+/**
+ * Retrieves distance between two locations
+ * @param {string} from - Origin location
+ * @param {string} to - Destination location
+ * Uses: distances global object
+ * Called from: handleCalculation (line ~140)
+ */
 function getDistance(from, to) {
   from = formatCountryName(from);
   to = formatCountryName(to);
@@ -201,38 +241,38 @@ function formatCountryName(country) {
 // Add this helper function to standardize country names
 function standardizeCountryName(country) {
   const standardNames = {
-    "germany": "germany",
-    "deutschland": "germany",
-    "france": "france",
-    "nederland": "netherlands",
-    "netherlands": "netherlands",
-    "holland": "netherlands",
-    "uk": "uk",
-    "unitedkingdom": "uk",
-    "greatbritain": "uk",
-    "england": "uk",
-    "usa": "usa",
-    "unitedstates": "usa",
-    "america": "usa",
-    "us": "usa",
-    "southkorea": "southkorea",
-    "korea": "southkorea",
-    "newzealand": "newzealand",
-    "southafrica": "southafrica",
-    "spain": "spain",
-    "espana": "spain",
-    "portugal": "portugal",
-    "italia": "italy",
-    "italy": "italy",
-    "brasil": "brazil",
-    "brazil": "brazil",
-    "india": "india",
-    "china": "china",
-    "japan": "japan",
-    "australia": "australia",
-    "canada": "canada",
-    "mexico": "mexico",
-    "russia": "russia",
+    germany: "germany",
+    deutschland: "germany",
+    france: "france",
+    nederland: "netherlands",
+    netherlands: "netherlands",
+    holland: "netherlands",
+    uk: "uk",
+    unitedkingdom: "uk",
+    greatbritain: "uk",
+    england: "uk",
+    usa: "usa",
+    unitedstates: "usa",
+    america: "usa",
+    us: "usa",
+    southkorea: "southkorea",
+    korea: "southkorea",
+    newzealand: "newzealand",
+    southafrica: "southafrica",
+    spain: "spain",
+    espana: "spain",
+    portugal: "portugal",
+    italia: "italy",
+    italy: "italy",
+    brasil: "brazil",
+    brazil: "brazil",
+    india: "india",
+    china: "china",
+    japan: "japan",
+    australia: "australia",
+    canada: "canada",
+    mexico: "mexico",
+    russia: "russia",
   };
 
   const normalized = country.toLowerCase().replace(/\s+/g, "");
@@ -241,24 +281,18 @@ function standardizeCountryName(country) {
 
 function getSustainabilityTip(transportMode, carbonFootprint) {
   const tips = {
-    train:
-      `Great choice! Train travel is one of the most eco-friendly options. You're saving ${
-        (0.255 - 0.041) * carbonFootprint / 0.041
-      } kg CO2 compared to flying.`,
-    car:
-      `Consider carpooling or switching to electric vehicles. A full car can reduce per-person emissions by up to 75%.`,
+    train: `Great choice! Train travel is one of the most eco-friendly options. You're saving ${
+      ((0.255 - 0.041) * carbonFootprint) / 0.041
+    } kg CO2 compared to flying.`,
+    car: `Consider carpooling or switching to electric vehicles. A full car can reduce per-person emissions by up to 75%.`,
     bus: `Public transportation is a sustainable choice! You're saving ${
-      (0.171 - 0.089) * carbonFootprint / 0.089
+      ((0.171 - 0.089) * carbonFootprint) / 0.089
     } kg CO2 compared to driving alone.`,
-    boat:
-      `While boats can be efficient for freight, consider faster low-carbon alternatives for passenger travel.`,
-    airplane:
-      `Air travel has a high impact. Consider offsetting your emissions or choosing ground transportation for shorter distances.`,
+    boat: `While boats can be efficient for freight, consider faster low-carbon alternatives for passenger travel.`,
+    airplane: `Air travel has a high impact. Consider offsetting your emissions or choosing ground transportation for shorter distances.`,
   };
 
-  return `<p class="tip" style="color: #2ecc71; margin-top: 1rem;">${
-    tips[transportMode]
-  }</p>`;
+  return `<p class="tip" style="color: #2ecc71; margin-top: 1rem;">${tips[transportMode]}</p>`;
 }
 
 async function getGoogleMapsDistance(origin, destination, mode) {
@@ -292,7 +326,7 @@ async function getGoogleMapsDistance(origin, destination, mode) {
         } else {
           reject(new Error("Distance Matrix failed"));
         }
-      },
+      }
     );
   });
 }
@@ -457,12 +491,12 @@ function createEnhancedAccommodationCard(acc) {
         <div class="card-content">
             <h3>${acc.name}</h3>
             <p class="location">📍 ${acc.location}</p>
-            <div class="rating">${"★".repeat(acc.rating)}${
-    "☆".repeat(5 - acc.rating)
-  }</div>
-            <button class="learn-more-btn" data-id="${
-    acc.name.replace(/\s+/g, "-").toLowerCase()
-  }">Learn More</button>
+            <div class="rating">${"★".repeat(acc.rating)}${"☆".repeat(
+    5 - acc.rating
+  )}</div>
+            <button class="learn-more-btn" data-id="${acc.name
+              .replace(/\s+/g, "-")
+              .toLowerCase()}">Learn More</button>
         </div>
     `;
 
@@ -479,24 +513,28 @@ function showAccommodationDetails(acc) {
   modal.innerHTML = `
         <div class="modal-content">
             <button class="modal-close">×</button>
-            <img src="${acc.image}" alt="${acc.name}" style="width:100%; height:300px; object-fit:cover; border-radius:15px;">
+            <img src="${acc.image}" alt="${
+    acc.name
+  }" style="width:100%; height:300px; object-fit:cover; border-radius:15px;">
             <h2 style="margin:1rem 0">${acc.name}</h2>
             <p class="location">📍 ${acc.location}</p>
-            <div class="rating" style="margin:1rem 0">${
-    "★".repeat(acc.rating)
-  }${"☆".repeat(5 - acc.rating)}</div>
+            <div class="rating" style="margin:1rem 0">${"★".repeat(
+              acc.rating
+            )}${"☆".repeat(5 - acc.rating)}</div>
             
             <div class="details-section">
                 <h3>Sustainability Features</h3>
                 <div class="amenities-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:1rem; margin:1rem 0;">
-                    ${
-    acc.amenities.map((amenity) => `
+                    ${acc.amenities
+                      .map(
+                        (amenity) => `
                         <div class="amenity-item" style="display:flex; align-items:center; gap:0.5rem;">
                             <span>${amenity.icon}</span>
                             <span>${amenity.name}</span>
                         </div>
-                    `).join("")
-  }
+                    `
+                      )
+                      .join("")}
                 </div>
                 
                 <h3>About This Location</h3>
@@ -702,8 +740,8 @@ function handleBookingSubmit(e) {
     preferences: {
       vegetarian: document.querySelector("#vegetarian")?.checked || false,
       earlyCheckIn: document.querySelector("#early-check-in")?.checked || false,
-      airportTransfer: document.querySelector("#airport-transfer")?.checked ||
-        false,
+      airportTransfer:
+        document.querySelector("#airport-transfer")?.checked || false,
     },
   };
 
@@ -742,21 +780,21 @@ function loadBookingConfirmation() {
             <div class="detail-item">
                 <span>Room Type:</span>
                 <strong>${
-      bookingData.roomType.charAt(0).toUpperCase() +
-      bookingData.roomType.slice(1)
-    }</strong>
+                  bookingData.roomType.charAt(0).toUpperCase() +
+                  bookingData.roomType.slice(1)
+                }</strong>
             </div>
             <div class="detail-item">
                 <span>Check-in:</span>
-                <strong>${
-      new Date(bookingData.checkIn).toLocaleDateString()
-    }</strong>
+                <strong>${new Date(
+                  bookingData.checkIn
+                ).toLocaleDateString()}</strong>
             </div>
             <div class="detail-item">
                 <span>Check-out:</span>
-                <strong>${
-      new Date(bookingData.checkOut).toLocaleDateString()
-    }</strong>
+                <strong>${new Date(
+                  bookingData.checkOut
+                ).toLocaleDateString()}</strong>
             </div>
             <div class="detail-item">
                 <span>Guests:</span>
@@ -807,9 +845,13 @@ function setupMapFilters() {
   mapFilters.forEach((filter) => {
     filter.addEventListener("click", () => {
       const images = JSON.parse(filter.dataset.images);
-      mapImages.innerHTML = images.map((src) => `
+      mapImages.innerHTML = images
+        .map(
+          (src) => `
                 <img src="${src}" alt="Destination" class="map-image" />
-            `).join("");
+            `
+        )
+        .join("");
     });
   });
 }
@@ -839,9 +881,8 @@ function initializeDestinationPage() {
     setTimeout(() => {
       for (const dest of destinations) {
         const category = dest.getAttribute("data-category");
-        dest.style.display = filter === "all" || category.includes(filter)
-          ? "block"
-          : "none";
+        dest.style.display =
+          filter === "all" || category.includes(filter) ? "block" : "none";
       }
     }, 1); // TODO: Set correct timeout here.
   });
@@ -892,3 +933,49 @@ function initializeDestinationPage() {
   // Initialize with "all" filter active
   //document.querySelector('.filter-btn[data-filter="all"]').click();
 }
+
+// Global variables
+
+// Main initialization
+document.addEventListener("DOMContentLoaded", async () => {
+    /** 
+     * Calculator button element
+     * Used in: Click event handler (line 35)
+     */
+    const calculateBtn = document.getElementById("calculate-btn");
+    
+    /** 
+     * Newsletter form element
+     * Used in: Submit event handler (line 17)
+     */
+    const newsletter = document.getElementById("newsletter");
+    
+    // ...existing code...
+});
+
+/**
+ * Variables used in handleCalculation:
+ * @param {string} origin - From location (line 98)
+ * @param {string} destination - To location (line 98)
+ * @param {string} transportMode - Travel method (line 98)
+ * Local vars:
+ * - result: DOM element (line 112)
+ * - distance: Calculated from getDistance (line 115)
+ * - carbonFootprint: Final calculation result (line 121)
+ */
+function handleCalculation(origin, destination, transportMode) {
+    // ...existing code...
+}
+
+/**
+ * Variables used in getDistance:
+ * @param {string} from - Origin location
+ * @param {string} to - Destination location
+ * Uses global: distances
+ * Returns: number|null
+ */
+function getDistance(from, to) {
+    // ...existing code...
+}
+
+// ...existing code...

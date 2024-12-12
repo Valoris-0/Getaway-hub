@@ -1,22 +1,39 @@
+/* Root Variables - Used throughout the stylesheet */
 :root {
+    /* Primary brand color - Used in buttons, accents, and gradients
+       Used in: .cta-button, .section h2::after, .tip-card::before */
     --primary-color: #2ecc71;
+    
+    /* Secondary brand color - Used in gradients and hover states
+       Used in: .cta-button:hover, background gradients */
     --secondary-color: #27ae60;
+    
+    /* Main text color - Used for body text and headings
+       Used in: body, .nav-menu a */
     --text-color: #333;
+    
+    /* Background color - Used for page and section backgrounds
+       Used in: body, .home-hero::after */
     --background-color: #f9f9f9;
 }
 
+/* Reset Styles - Applied globally */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base Body Styles - Sets foundation for the document */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
 }
 
+/* Hero Section Styles
+   Used in: All page headers
+   Dependencies: --background-color variable */
 .hero {
     position: relative;
     height: 100vh;
@@ -45,7 +62,9 @@ body {
     image-rendering: crisp-edges;
 }
 
-/* Single definition for home-hero */
+/* Home Hero Specific Styles
+   Extended from .hero class
+   Used in: Homepage only */
 .home-hero {
     background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
                 url('https://images.unsplash.com/photo-1682686581580-d99b0230064e?q=80&w=2070');
@@ -79,6 +98,9 @@ body {
 }
 */
 
+/* Hero Content Styles
+   Used in: All hero sections
+   Animation: fadeInUp */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -91,7 +113,8 @@ body {
     animation: fadeInUp 1.2s ease-out;
 }
 
-/* Specific hero backgrounds for each page */
+/* Page-Specific Hero Backgrounds
+   Each class sets unique background for different pages */
 .destinations-hero {
     background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)),
                     url('https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070');
@@ -366,6 +389,9 @@ body {
     transform: scale(1.05);
 }
 
+/* Navigation Menu Styles
+   Fixed position header
+   Used throughout site */
 .nav-menu {
     position: fixed;
     top: 0;
@@ -426,6 +452,9 @@ window.addEventListener('scroll', () => {
 });
 */
 
+/* Destination Card Styles
+   Used in: Destinations section
+   Dependencies: Various animations and transforms */
 .destination-card {
     position: relative;
     overflow: hidden;
@@ -656,7 +685,9 @@ footer {
     }
 }
 
-/* Enhanced form styling */
+/* Form and Input Styles
+   Used in: Calculator and booking forms
+   Dependencies: --primary-color variable */
 input, select, button {
     padding: 0.8rem 1.2rem;
     border: 2px solid #ddd;
@@ -670,7 +701,8 @@ button:hover {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* Animation improvements */
+/* Animation Keyframes
+   Used throughout the site for various animations */
 .accommodation-card, .tip-card {
     opacity: 0;
     animation: fadeInUp 0.6s ease forwards;
@@ -1687,38 +1719,6 @@ main {
 .destination-info h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-.destination-info p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease 0.2s;
-}
-
-.destination-card:hover .destination-info p {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.eco-stats {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease 0.3s;
-}
-
-.destination-card:hover .eco-stats {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.eco-stat {
-    display: flex;
     align-items: center;
     gap: 0.5rem;
     background: rgba(255,255,255,0.2);
