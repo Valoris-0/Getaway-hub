@@ -322,77 +322,60 @@ function loadAccommodations() {
             description: 'Luxury eco-resort nestled in the heart of Costa Rica\'s pristine rainforest.'
         },
         { 
-            name: 'Green Hotel', 
-            location: 'Manuel Antonio, Costa Rica', 
-            rating: 4,
-            image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=2070',
-            description: 'Sustainable boutique hotel with panoramic ocean views.'
-        },
-        { 
-            name: 'Rainforest Lodge', 
-            location: 'Monteverde, Costa Rica', 
+            name: 'Alpine Eco Lodge', 
+            location: 'Dolomites, Italy', 
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1470165301023-58dab8118cc9?q=80&w=2070',
-            description: 'Immersive rainforest experience with private hiking trails.'
+            image: 'https://images.unsplash.com/photo-1502786129293-79981df4e689?q=80&w=2070',
+            description: 'Sustainable mountain retreat nestled in the stunning Dolomites with panoramic alpine views.'
         },
         { 
-            name: 'Beach Eco Resort', 
-            location: 'Tamarindo, Costa Rica', 
-            rating: 4,
-            image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=2070',
-            description: 'Beachfront eco-resort with world-class sustainability practices.'
-        },
-        { 
-            name: 'Sustainable Mountain Lodge',
-            location: 'Swiss Alps',
-            rating: 5,
-            image: 'https://images.unsplash.com/photo-1626268220143-33e731d4aa1c?q=80&w=2070',
-            description: 'Alpine eco-lodge with panoramic mountain views and sustainable practices'
-        },
-        {
-            name: 'Solar Powered Resort',
-            location: 'Maldives',
+            name: 'Solar Powered Resort', 
+            location: 'Maldives', 
             rating: 5,
             image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?q=80&w=2070',
             description: 'Overwater villas powered by solar energy with coral reef conservation programs'
         },
         {
-            name: 'Treehouse Eco Resort',
-            location: 'Amazon, Brazil',
+            name: 'Nordic Eco Hotel',
+            location: 'Norway',
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7'
+            image: 'https://images.unsplash.com/photo-1520681279154-51b3fb4ea0f7?q=80&w=2070',
+            description: 'Sustainable Arctic retreat with spectacular views of the Northern Lights'
         },
         {
-            name: 'Zero-Waste Hotel',
-            location: 'Copenhagen, Denmark',
+            name: 'Zen Forest Retreat',
+            location: 'Kyoto, Japan',
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1601918774946-25832a4be0d6'
+            image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=2070',
+            description: 'Traditional Japanese temple stay with meditation gardens and sustainable practices'
         },
         {
-            name: 'Organic Farm Stay',
-            location: 'Tuscany, Italy',
+            name: 'Amazon Treehouse Lodge',
+            location: 'Amazon, Peru',
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1594498653385-d5172c532c00'
+            image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2070',
+            description: 'Immersive rainforest experience supporting local conservation efforts'
         },
         {
-            name: 'Wind-Powered Lodge',
-            location: 'Scotland Highlands',
-            rating: 4,
-            image: 'https://images.unsplash.com/photo-1585543805890-6051f7829f98?q=100&w=1920&auto=format&fit=crop'
-        },
-        {
-            name: 'Desert Eco Lodge',
-            location: 'Dubai, UAE',
+            name: 'Rainforest Sanctuary',
+            location: 'Borneo, Malaysia',
             rating: 5,
-            image: 'https://images.unsplash.com/photo-1542401886-65d6c61db217?q=100&w=1920&auto=format&fit=crop',
-            description: 'Solar-powered desert oasis with sustainable water management'
+            image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2070',
+            description: 'Luxurious eco-resort surrounded by ancient rainforest, offering wildlife conservation experiences and sustainable living practices'
         },
         {
-            name: 'Forest Canopy Resort',
-            location: 'British Columbia, Canada',
+            name: 'Coastal Eco Resort',
+            location: 'Great Barrier Reef, Australia',
+            rating: 5,
+            image: 'https://images.unsplash.com/photo-1511316695145-4992006ffddb?q=80&w=2070',
+            description: 'Beachfront resort focused on marine conservation and reef protection'
+        },
+        {
+            name: 'Mountain Safari Lodge',
+            location: 'Rwanda',
             rating: 4,
-            image: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=100&w=1920&auto=format&fit=crop',
-            description: 'Minimal impact treetop lodging in old growth forest'
+            image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070',
+            description: 'Sustainable safari lodge supporting gorilla conservation and local communities'
         }
     ];
     
@@ -778,6 +761,8 @@ function initializeDestinationPage() {
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            console.log('Filter button clicked:', btn.getAttribute('data-filter')); // Debug log
+            
             // Remove active class from all buttons
             filterBtns.forEach(b => b.classList.remove('active'));
             // Add active class to clicked button
@@ -785,18 +770,40 @@ function initializeDestinationPage() {
 
             const filter = btn.getAttribute('data-filter');
             
+            // First hide all destinations with fade out
             destinations.forEach(dest => {
-                const categories = dest.getAttribute('data-category').split(' ');
-                if (filter === 'all' || categories.includes(filter)) {
-                    dest.style.display = '';
-                    dest.style.animation = 'fadeIn 0.5s ease forwards';
-                } else {
-                    dest.style.display = 'none';
-                }
+                dest.style.opacity = '0';
+                dest.style.transform = 'scale(0.95)';
             });
+
+            // After fade out, show filtered destinations
+            setTimeout(() => {
+                destinations.forEach(dest => {
+                    const categories = dest.getAttribute('data-category').split(' ');
+                    console.log('Card categories:', categories); // Debug log
+                    
+                    if (filter === 'all') {
+                        dest.style.display = '';
+                        setTimeout(() => {
+                            dest.style.opacity = '1';
+                            dest.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        if (categories.includes(filter)) {
+                            dest.style.display = '';
+                            setTimeout(() => {
+                                dest.style.opacity = '1';
+                                dest.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            dest.style.display = 'none';
+                        }
+                    }
+                });
+            }, 300);
         });
     });
-}
 
-// Add this at the bottom of your existing CSS
-// Moved to styles.css
+    // Initialize with "all" filter active
+    document.querySelector('.filter-btn[data-filter="all"]').click();
+}
