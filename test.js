@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeMap();
     
     // Load accommodations
-     //loadAccommodations(); // FIXME: Fix this code. it's preventing the rest of the javascript to load.
+    loadAccommodations();
 
     // Load travel tips
-    //loadTravelTips();// FIXME: Fix this code. it's preventing the rest of the javascript to load.
+    loadTravelTips();
 
     // Newsletter subscription
     const newsletter = document.getElementById('newsletter');
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load placeholder images
     loadPlaceholderImages();
 
-    // Load confirmation if on confirmation paghttps://github.com/Valoris-0/Getaway-hube
+    // Load confirmation if on confirmation page
     if (window.location.pathname.includes('confirmation.html')) {
         loadBookingConfirmation();
     }
@@ -756,73 +756,54 @@ function initializeMap() {
 }
 
 function initializeDestinationPage() {
-    const filterBtnsParent = document.querySelector('.destination-filters');
+    const filterBtns = document.querySelectorAll('.filter-btn');
     const destinations = document.querySelectorAll('.destination-card');
 
-    filterBtnsParent.addEventListener("click", (e) => {
-      const btn = e.target;
-      for (const button of filterBtnsParent.children) {
-	button.classList.remove("active")
-      }
-      btn.classList.add("active")
-      
-      const filter = btn.getAttribute('data-filter')
-      //   destinations.forEach(dest => {
-      //dest.style.opacity = '100'; // FIXME: Animations ain't workin'
-      //dest.style.transform = 'scale(0.95)';
-      //   });
-      setTimeout(() => {
-	for (const dest of destinations) {
-	console.log(dest.getAttribute("data-category"))
-	  const category = dest.getAttribute("data-category");
-	  dest.style.display = filter === "all" || category.includes(filter) ? "block" : "none"
-	}
-      }, 1) // TODO: Set correct timeout here.
-    })
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            console.log('Filter button clicked:', btn.getAttribute('data-filter')); // Debug log
+            
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
 
-	  //   filterBtns.addEventListener('click', () => {
-	  //console.log('Filter button clicked:', btn.getAttribute('data-filter')); // Debug log
-	  //
-	  //// Remove active class from all buttons
-	  //filterBtns.forEach(b => b.classList.remove('active'));
-	  //// Add active class to clicked button
-	  //btn.classList.add('active');
-	  //
-	  //const filter = btn.getAttribute('data-filter');
-	  //
-	  //// First hide all destinations with fade out
-	  //destinations.forEach(dest => {
-	  //    dest.style.opacity = '0';
-	  //    dest.style.transform = 'scale(0.95)';
-	  //});
-	  //
-	  //// After fade out, show filtered destinations
-	  //setTimeout(() => {
-	  //    destinations.forEach(dest => {
-	  // const categories = dest.getAttribute('data-category').split(' ');
-	  // console.log('Card categories:', categories); // Debug log
-	  //
-	  // if (filter === 'all') {
-	  //     dest.style.display = '';
-	  //     setTimeout(() => {
-	  //  dest.style.opacity = '1';
-	  //  dest.style.transform = 'scale(1)';
-	  //     }, 50);
-	  // } else {
-	  //     if (categories.includes(filter)) {
-	  //  dest.style.display = '';
-	  //  setTimeout(() => {
-	  //      dest.style.opacity = '1';
-	  //      dest.style.transform = 'scale(1)';
-	  //  }, 50);
-	  //     } else {
-	  //  dest.style.display = 'none';
-	  //     }
-	  // }
-	  //    });
-	  //}, 300);
-	  //   });
+            const filter = btn.getAttribute('data-filter');
+            
+            // First hide all destinations with fade out
+            destinations.forEach(dest => {
+                dest.style.opacity = '0';
+                dest.style.transform = 'scale(0.95)';
+            });
+
+            // After fade out, show filtered destinations
+            setTimeout(() => {
+                destinations.forEach(dest => {
+                    const categories = dest.getAttribute('data-category').split(' ');
+                    console.log('Card categories:', categories); // Debug log
+                    
+                    if (filter === 'all') {
+                        dest.style.display = '';
+                        setTimeout(() => {
+                            dest.style.opacity = '1';
+                            dest.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        if (categories.includes(filter)) {
+                            dest.style.display = '';
+                            setTimeout(() => {
+                                dest.style.opacity = '1';
+                                dest.style.transform = 'scale(1)';
+                            }, 50);
+                        } else {
+                            dest.style.display = 'none';
+                        }
+                    }
+                });
+            }, 300);
+        });
+    });
 
     // Initialize with "all" filter active
-    //document.querySelector('.filter-btn[data-filter="all"]').click();
+    document.querySelector('.filter-btn[data-filter="all"]').click();
 }
